@@ -28,7 +28,7 @@ function! s:maps() abort
       let head = substitute(head, '<[^<>]*>$\|.$', '', '')
     endwhile
     if head !=# '<skip>' && empty(maparg(head.tail, mode))
-      exe mode.'map' flags head.tail rhs
+      execute mode.'map' flags head.tail rhs
     endif
   endfor
 endfunction
@@ -39,22 +39,22 @@ function! s:MapNextFamily(map,cmd) abort
   let map = '<Plug>unimpaired'.toupper(a:map)
   let cmd = '".(v:count ? v:count : "")."'.a:cmd
   let end = '"<CR>'.(a:cmd ==# 'l' || a:cmd ==# 'c' ? 'zv' : '')
-  execute 'nnoremap <silent> '.map.'Previous :<C-U>exe "'.cmd.'previous'.end
-  execute 'nnoremap <silent> '.map.'Next     :<C-U>exe "'.cmd.'next'.end
-  execute 'nnoremap <silent> '.map.'First    :<C-U>exe "'.cmd.'first'.end
-  execute 'nnoremap <silent> '.map.'Last     :<C-U>exe "'.cmd.'last'.end
+  execute 'nnoremap <silent> '.map.'Previous :<C-U>execute "'.cmd.'previous'.end
+  execute 'nnoremap <silent> '.map.'Next     :<C-U>execute "'.cmd.'next'.end
+  execute 'nnoremap <silent> '.map.'First    :<C-U>execute "'.cmd.'first'.end
+  execute 'nnoremap <silent> '.map.'Last     :<C-U>execute "'.cmd.'last'.end
   call s:map('n', '['.        a:map , map.'Previous')
   call s:map('n', ']'.        a:map , map.'Next')
   call s:map('n', '['.toupper(a:map), map.'First')
   call s:map('n', ']'.toupper(a:map), map.'Last')
   if exists(':'.a:cmd.'nfile')
-    execute 'nnoremap <silent> '.map.'PFile :<C-U>exe "'.cmd.'pfile'.end
-    execute 'nnoremap <silent> '.map.'NFile :<C-U>exe "'.cmd.'nfile'.end
+    execute 'nnoremap <silent> '.map.'PFile :<C-U>execute "'.cmd.'pfile'.end
+    execute 'nnoremap <silent> '.map.'NFile :<C-U>execute "'.cmd.'nfile'.end
     call s:map('n', '[<C-'.toupper(a:map).'>', map.'PFile')
     call s:map('n', ']<C-'.toupper(a:map).'>', map.'NFile')
   elseif exists(':p'.a:cmd.'next')
-    execute 'nnoremap <silent> '.map.'PPrevious :<C-U>exe "p'.cmd.'previous'.end
-    execute 'nnoremap <silent> '.map.'PNext :<C-U>exe "p'.cmd.'next'.end
+    execute 'nnoremap <silent> '.map.'PPrevious :<C-U>execute "p'.cmd.'previous'.end
+    execute 'nnoremap <silent> '.map.'PNext :<C-U>execute "p'.cmd.'next'.end
     call s:map('n', '[<C-'.toupper(a:map).'>', map.'PPrevious')
     call s:map('n', ']<C-'.toupper(a:map).'>', map.'PNext')
   endif
@@ -136,8 +136,8 @@ call s:map('o', ']n', '<Plug>unimpairedContextNext')
 
 nnoremap <silent> <Plug>unimpairedContextPrevious :<C-U>call <SID>Context(1)<CR>
 nnoremap <silent> <Plug>unimpairedContextNext     :<C-U>call <SID>Context(0)<CR>
-xnoremap <silent> <Plug>unimpairedContextPrevious :<C-U>exe 'normal! gv'<Bar>call <SID>Context(1)<CR>
-xnoremap <silent> <Plug>unimpairedContextNext     :<C-U>exe 'normal! gv'<Bar>call <SID>Context(0)<CR>
+xnoremap <silent> <Plug>unimpairedContextPrevious :<C-U>execute 'normal! gv'<Bar>call <SID>Context(1)<CR>
+xnoremap <silent> <Plug>unimpairedContextNext     :<C-U>execute 'normal! gv'<Bar>call <SID>Context(0)<CR>
 onoremap <silent> <Plug>unimpairedContextPrevious :<C-U>call <SID>ContextMotion(1)<CR>
 onoremap <silent> <Plug>unimpairedContextNext     :<C-U>call <SID>ContextMotion(0)<CR>
 
@@ -201,7 +201,7 @@ function! s:ExecMove(cmd) abort
     let &foldmethod = 'manual'
   endif
   normal! m`
-  silent! exe a:cmd
+  silent! execute a:cmd
   norm! ``
   if old_fdm !=# 'manual'
     let &foldmethod = old_fdm
@@ -312,10 +312,10 @@ call s:map('n', 'yop', ':call <SID>setup_paste()<CR>0C', '<silent>')
 function! s:putline(how, map) abort
   let [body, type] = [getreg(v:register), getregtype(v:register)]
   if type ==# 'V'
-    exe 'normal! "'.v:register.a:how
+    execute 'normal! "'.v:register.a:how
   else
     call setreg(v:register, body, 'l')
-    exe 'normal! "'.v:register.a:how
+    execute 'normal! "'.v:register.a:how
     call setreg(v:register, body, type)
   endif
   silent! call repeat#set("\<Plug>unimpairedPut".a:map)
