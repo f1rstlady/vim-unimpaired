@@ -39,22 +39,22 @@ function! s:MapNextFamily(map,cmd) abort
   let map = '<Plug>unimpaired'.toupper(a:map)
   let cmd = '".(v:count ? v:count : "")."'.a:cmd
   let end = '"<CR>'.(a:cmd ==# 'l' || a:cmd ==# 'c' ? 'zv' : '')
-  execute 'nnoremap <silent> '.map.'Previous :<C-U>execute "'.cmd.'previous'.end
-  execute 'nnoremap <silent> '.map.'Next     :<C-U>execute "'.cmd.'next'.end
-  execute 'nnoremap <silent> '.map.'First    :<C-U>execute "'.cmd.'first'.end
-  execute 'nnoremap <silent> '.map.'Last     :<C-U>execute "'.cmd.'last'.end
+  execute 'nnoremap <silent> '.map.'Previous <Cmd>execute "'.cmd.'previous'.end
+  execute 'nnoremap <silent> '.map.'Next     <Cmd>execute "'.cmd.'next'.end
+  execute 'nnoremap <silent> '.map.'First    <Cmd>execute "'.cmd.'first'.end
+  execute 'nnoremap <silent> '.map.'Last     <Cmd>execute "'.cmd.'last'.end
   call s:map('n', '['.        a:map , map.'Previous')
   call s:map('n', ']'.        a:map , map.'Next')
   call s:map('n', '['.toupper(a:map), map.'First')
   call s:map('n', ']'.toupper(a:map), map.'Last')
   if exists(':'.a:cmd.'nfile')
-    execute 'nnoremap <silent> '.map.'PFile :<C-U>execute "'.cmd.'pfile'.end
-    execute 'nnoremap <silent> '.map.'NFile :<C-U>execute "'.cmd.'nfile'.end
+    execute 'nnoremap <silent> '.map.'PFile <Cmd>execute "'.cmd.'pfile'.end
+    execute 'nnoremap <silent> '.map.'NFile <Cmd>execute "'.cmd.'nfile'.end
     call s:map('n', '[<C-'.toupper(a:map).'>', map.'PFile')
     call s:map('n', ']<C-'.toupper(a:map).'>', map.'NFile')
   elseif exists(':p'.a:cmd.'next')
-    execute 'nnoremap <silent> '.map.'PPrevious :<C-U>execute "p'.cmd.'previous'.end
-    execute 'nnoremap <silent> '.map.'PNext :<C-U>execute "p'.cmd.'next'.end
+    execute 'nnoremap <silent> '.map.'PPrevious <Cmd>execute "p'.cmd.'previous'.end
+    execute 'nnoremap <silent> '.map.'PNext <Cmd>execute "p'.cmd.'next'.end
     call s:map('n', '[<C-'.toupper(a:map).'>', map.'PPrevious')
     call s:map('n', ']<C-'.toupper(a:map).'>', map.'PNext')
   endif
@@ -134,12 +134,12 @@ call s:map('x', ']n', '<Plug>unimpairedContextNext')
 call s:map('o', '[n', '<Plug>unimpairedContextPrevious')
 call s:map('o', ']n', '<Plug>unimpairedContextNext')
 
-nnoremap <silent> <Plug>unimpairedContextPrevious :<C-U>call <SID>Context(1)<CR>
-nnoremap <silent> <Plug>unimpairedContextNext     :<C-U>call <SID>Context(0)<CR>
-xnoremap <silent> <Plug>unimpairedContextPrevious :<C-U>execute 'normal! gv'<Bar>call <SID>Context(1)<CR>
-xnoremap <silent> <Plug>unimpairedContextNext     :<C-U>execute 'normal! gv'<Bar>call <SID>Context(0)<CR>
-onoremap <silent> <Plug>unimpairedContextPrevious :<C-U>call <SID>ContextMotion(1)<CR>
-onoremap <silent> <Plug>unimpairedContextNext     :<C-U>call <SID>ContextMotion(0)<CR>
+nnoremap <silent> <Plug>unimpairedContextPrevious <Cmd>call <SID>Context(1)<CR>
+nnoremap <silent> <Plug>unimpairedContextNext     <Cmd>call <SID>Context(0)<CR>
+xnoremap <silent> <Plug>unimpairedContextPrevious <Cmd>execute 'normal! gv'<Bar>call <SID>Context(1)<CR>
+xnoremap <silent> <Plug>unimpairedContextNext     <Cmd>execute 'normal! gv'<Bar>call <SID>Context(0)<CR>
+onoremap <silent> <Plug>unimpairedContextPrevious <Cmd>call <SID>ContextMotion(1)<CR>
+onoremap <silent> <Plug>unimpairedContextNext     <Cmd>call <SID>ContextMotion(0)<CR>
 
 function! s:Context(reverse) abort
   call search('^\(@@ .* @@\|[<=>|]\{7}[<=>|]\@!\)', a:reverse ? 'bW' : 'W')
@@ -189,8 +189,8 @@ function! s:BlankDown(count) abort
   silent! call repeat#set("\<Plug>unimpairedBlankDown", a:count)
 endfunction
 
-nnoremap <silent> <Plug>unimpairedBlankUp   :<C-U>call <SID>BlankUp(v:count1)<CR>
-nnoremap <silent> <Plug>unimpairedBlankDown :<C-U>call <SID>BlankDown(v:count1)<CR>
+nnoremap <silent> <Plug>unimpairedBlankUp   <Cmd>call <SID>BlankUp(v:count1)<CR>
+nnoremap <silent> <Plug>unimpairedBlankDown <Cmd>call <SID>BlankDown(v:count1)<CR>
 
 call s:map('n', '[<Space>', '<Plug>unimpairedBlankUp')
 call s:map('n', ']<Space>', '<Plug>unimpairedBlankDown')
@@ -223,10 +223,10 @@ function! s:MoveSelectionDown(count) abort
   silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
 endfunction
 
-nnoremap <silent> <Plug>unimpairedMoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
-nnoremap <silent> <Plug>unimpairedMoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
-noremap  <silent> <Plug>unimpairedMoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
-noremap  <silent> <Plug>unimpairedMoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
+nnoremap <silent> <Plug>unimpairedMoveUp            <Cmd>call <SID>Move('--',v:count1,'Up')<CR>
+nnoremap <silent> <Plug>unimpairedMoveDown          <Cmd>call <SID>Move('+',v:count1,'Down')<CR>
+noremap  <silent> <Plug>unimpairedMoveSelectionUp   <Cmd>call <SID>MoveSelectionUp(v:count1)<CR>
+noremap  <silent> <Plug>unimpairedMoveSelectionDown <Cmd>call <SID>MoveSelectionDown(v:count1)<CR>
 
 call s:map('n', '[e', '<Plug>unimpairedMoveUp')
 call s:map('n', ']e', '<Plug>unimpairedMoveDown')
@@ -328,12 +328,12 @@ call s:map('n', '[p', '<Plug>unimpairedPutAbove')
 call s:map('n', ']p', '<Plug>unimpairedPutBelow')
 call s:map('n', '[P', '<Plug>unimpairedPutAbove')
 call s:map('n', ']P', '<Plug>unimpairedPutBelow')
-call s:map('n', '>P', ":<C-U>call <SID>putline(v:count1 . '[p', 'Above')<CR>>']", '<silent>')
-call s:map('n', '>p', ":<C-U>call <SID>putline(v:count1 . ']p', 'Below')<CR>>']", '<silent>')
-call s:map('n', '<P', ":<C-U>call <SID>putline(v:count1 . '[p', 'Above')<CR><']", '<silent>')
-call s:map('n', '<p', ":<C-U>call <SID>putline(v:count1 . ']p', 'Below')<CR><']", '<silent>')
-call s:map('n', '=P', ":<C-U>call <SID>putline(v:count1 . '[p', 'Above')<CR>=']", '<silent>')
-call s:map('n', '=p', ":<C-U>call <SID>putline(v:count1 . ']p', 'Below')<CR>=']", '<silent>')
+call s:map('n', '>P', "<Cmd>call <SID>putline(v:count1 . '[p', 'Above')<CR>>']", '<silent>')
+call s:map('n', '>p', "<Cmd>call <SID>putline(v:count1 . ']p', 'Below')<CR>>']", '<silent>')
+call s:map('n', '<P', "<Cmd>call <SID>putline(v:count1 . '[p', 'Above')<CR><']", '<silent>')
+call s:map('n', '<p', "<Cmd>call <SID>putline(v:count1 . ']p', 'Below')<CR><']", '<silent>')
+call s:map('n', '=P', "<Cmd>call <SID>putline(v:count1 . '[p', 'Above')<CR>=']", '<silent>')
+call s:map('n', '=p', "<Cmd>call <SID>putline(v:count1 . ']p', 'Below')<CR>=']", '<silent>')
 
 " Section: Encoding and decoding
 
