@@ -1,8 +1,3 @@
-" unimpaired.vim - Pairs of handy bracket mappings
-" Maintainer:   Tim Pope <http://tpo.pe/>
-" Version:      2.0
-" GetLatestVimScripts: 1590 1 :AutoInstall: unimpaired.vim
-
 if exists("g:loaded_unimpaired")
   finish
 endif
@@ -528,5 +523,3 @@ call UnimpairedMapTransform('xml_decode',']x')
 " Section: Activation
 
 call s:maps()
-
-" vim:set sw=2 sts=2:
