@@ -112,42 +112,4 @@ you only paste once (YOPO).  Instead, press [op, ]op, or yop to invoke |O|,
 |o|, or |0||C| with 'paste' already set.  Leaving insert mode sets 'nopaste'
 automatically.
 
-ENCODING AND DECODING                           *unimpaired-encoding*
-
-Each of these operations has a map that takes a motion, a map that
-targets [count] lines, and a visual mode map.  The linewise variant integrates
-with repeat.vim.
-
-Mnemonic: encoding always comes before decoding; "[" always comes before "]".
-
-                                                *[x* *[xx* *v_[x*
-[x{motion}              XML encode.
-[xx                     <foo bar="baz"> => &lt;foo bar=&quot;baz&quot;&gt;
-{Visual}[x
-
-                                                *]x* *]xx* *v_]x*
-]x{motion}              XML decode.  HTML entities are handled as well.
-]xx
-{Visual}]x
-
-                                                *[u* *[uu* *v_[u*
-[u{motion}              URL encode.
-[uu                     foo bar => foo%20bar
-{Visual}[u
-
-                                                *]u* *]uu* *v_]u*
-]u{motion}              URL decode.
-]uu
-{Visual}]u
-
-                                                *[y* *[yy* *v_[y*
-[y{motion}              C String encode.  Backslash escape control
-[yy                     characters, quotation marks, and backslashes.
-{Visual}[y
-
-                                                *]y* *]yy* *v_]y*
-]y{motion}              C String decode.
-]yy
-{Visual}]y
-
  vim:tw=78:et:ft=help:norl:

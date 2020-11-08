@@ -19,10 +19,6 @@ There are mappings for toggling options. `[os`, `]os`, and `yos` perform
 and several others, plus mappings to help alleviate the `set paste` dance.
 Consult the documentation.
 
-There are mappings for encoding and decoding. `[x` and `]x` encode and
-decode XML (and HTML). `[u` and `]u` encode and decode URLs. `[y` and
-`]y` do C String style escaping.
-
 And in the miscellaneous category, there's `[f` and `]f` to go to the
 next/previous file in the directory, and `[n` and `]n` to jump between
 SCM conflict markers.
